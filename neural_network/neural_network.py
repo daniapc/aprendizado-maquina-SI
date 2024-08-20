@@ -1,4 +1,4 @@
-import sklearn
+import pandas as pd
 import numpy as np
 from sklearn.neural_network import MLPClassifier
 from sklearn.datasets import make_classification
@@ -61,6 +61,12 @@ def crossvalidation(X, y, model, n_folds, params, seed=4):
         accuracy.append(sum(acc)/len(acc))
         #Print the results for the set of parameters
         print(f"Parameters: {params[j]}, Accuracy: {accuracy[j]}")
+
+        param_dict = params[j].copy()
+        param_dict["Dict"] = str(params[j])
+        param_dict["Accuracy"] = accuracy[j]
+        save_df = pd.DataFrame([param_dict])
+        save_df.to_csv("./neural_network/predictions.csv", mode='a', index=False, header=False)
         #Change the seed to do other folds
         seed=seed+1
     #Select and print the set of best hyperparameters

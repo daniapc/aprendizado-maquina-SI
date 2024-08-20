@@ -1,0 +1,19 @@
+activation,batch_size,hidden_layer_sizes,max_iter,learning_rate_init,Dict,Accuracy
+logistic,300,"(10, 20, 20, 10)",2500,0.001,"{'activation': 'logistic', 'batch_size': 300, 'hidden_layer_sizes': (10, 20, 20, 10), 'max_iter': 2500, 'learning_rate_init': 0.001}",0.585
+logistic,300,"(10, 20, 20, 10)",2500,0.005,"{'activation': 'logistic', 'batch_size': 300, 'hidden_layer_sizes': (10, 20, 20, 10), 'max_iter': 2500, 'learning_rate_init': 0.005}",0.56
+logistic,300,"(10, 20, 20, 10)",2500,0.0005,"{'activation': 'logistic', 'batch_size': 300, 'hidden_layer_sizes': (10, 20, 20, 10), 'max_iter': 2500, 'learning_rate_init': 0.0005}",0.57
+logistic,300,"(10, 20, 20, 10)",3500,0.001,"{'activation': 'logistic', 'batch_size': 300, 'hidden_layer_sizes': (10, 20, 20, 10), 'max_iter': 3500, 'learning_rate_init': 0.001}",0.5783333333333334
+logistic,300,"(10, 20, 20, 10)",3500,0.005,"{'activation': 'logistic', 'batch_size': 300, 'hidden_layer_sizes': (10, 20, 20, 10), 'max_iter': 3500, 'learning_rate_init': 0.005}",0.6408333333333334
+logistic,300,"(10, 20, 20, 10)",3500,0.0005,"{'activation': 'logistic', 'batch_size': 300, 'hidden_layer_sizes': (10, 20, 20, 10), 'max_iter': 3500, 'learning_rate_init': 0.0005}",0.54
+logistic,300,"(10, 20, 20, 10)",3000,0.001,"{'activation': 'logistic', 'batch_size': 300, 'hidden_layer_sizes': (10, 20, 20, 10), 'max_iter': 3000, 'learning_rate_init': 0.001}",0.5533333333333333
+logistic,300,"(10, 20, 20, 10)",3000,0.005,"{'activation': 'logistic', 'batch_size': 300, 'hidden_layer_sizes': (10, 20, 20, 10), 'max_iter': 3000, 'learning_rate_init': 0.005}",0.6233333333333334
+logistic,300,"(10, 20, 20, 10)",3000,0.0005,"{'activation': 'logistic', 'batch_size': 300, 'hidden_layer_sizes': (10, 20, 20, 10), 'max_iter': 3000, 'learning_rate_init': 0.0005}",0.6
+logistic,250,"(10, 20, 20, 10)",2500,0.001,"{'activation': 'logistic', 'batch_size': 250, 'hidden_layer_sizes': (10, 20, 20, 10), 'max_iter': 2500, 'learning_rate_init': 0.001}",0.55
+logistic,250,"(10, 20, 20, 10)",2500,0.005,"{'activation': 'logistic', 'batch_size': 250, 'hidden_layer_sizes': (10, 20, 20, 10), 'max_iter': 2500, 'learning_rate_init': 0.005}",0.6608333333333334
+logistic,250,"(10, 20, 20, 10)",2500,0.0005,"{'activation': 'logistic', 'batch_size': 250, 'hidden_layer_sizes': (10, 20, 20, 10), 'max_iter': 2500, 'learning_rate_init': 0.0005}",0.5633333333333334
+logistic,250,"(10, 20, 20, 10)",3500,0.001,"{'activation': 'logistic', 'batch_size': 250, 'hidden_layer_sizes': (10, 20, 20, 10), 'max_iter': 3500, 'learning_rate_init': 0.001}",0.52
+logistic,250,"(10, 20, 20, 10)",3500,0.005,"{'activation': 'logistic', 'batch_size': 250, 'hidden_layer_sizes': (10, 20, 20, 10), 'max_iter': 3500, 'learning_rate_init': 0.005}",0.5708333333333333
+logistic,250,"(10, 20, 20, 10)",3500,0.0005,"{'activation': 'logistic', 'batch_size': 250, 'hidden_layer_sizes': (10, 20, 20, 10), 'max_iter': 3500, 'learning_rate_init': 0.0005}",0.5833333333333334
+logistic,250,"(10, 20, 20, 10)",3000,0.001,"{'activation': 'logistic', 'batch_size': 250, 'hidden_layer_sizes': (10, 20, 20, 10), 'max_iter': 3000, 'learning_rate_init': 0.001}",0.59
+logistic,250,"(10, 20, 20, 10)",3000,0.005,"{'activation': 'logistic', 'batch_size': 250, 'hidden_layer_sizes': (10, 20, 20, 10), 'max_iter': 3000, 'learning_rate_init': 0.005}",0.5858333333333333
+logistic,250,"(10, 20, 20, 10)",3000,0.0005,"{'activation': 'logistic', 'batch_size': 250, 'hidden_layer_sizes': (10, 20, 20, 10), 'max_iter': 3000, 'learning_rate_init': 0.0005}",0.5333333333333333

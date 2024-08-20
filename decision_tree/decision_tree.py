@@ -251,7 +251,7 @@ class TreeNode:
             return child.predict(sample)
         
 #This function performs an hyperparameter tunning using cross-validation
-def crossvalidation(X, y, model, n_folds, params, seed=4):
+def crossvalidation(X, y, model, n_folds, params, seed=4, q = None):
     start=datetime.now()
     #Creating combinations of all hyperparameters (like and expand grid)
     keys, values = zip(*params.items())
@@ -281,6 +281,14 @@ def crossvalidation(X, y, model, n_folds, params, seed=4):
         accuracy.append(sum(acc)/len(acc))
         #Print the results for the set of parameters
         print(f"Parameters: {params[j]}, Accuracy: {accuracy[j]}")
+
+        param_dict = params[j].copy()
+        param_dict["q"] = str(q)
+        param_dict["Dict"] = str(param_dict)
+        param_dict["Accuracy"] = accuracy[j]
+        save_df = pd.DataFrame([param_dict])
+        save_df.to_csv("./decision_tree/predictions.csv", mode='a', index=False, header=False)
+
         #Change the seed to do other folds
         seed=seed+1
     #Select and print the set of best hyperparameters
