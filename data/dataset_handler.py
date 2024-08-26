@@ -1,8 +1,9 @@
 import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
 
 class DatasetHandler:
     def __init__(self):
-        pass
+        self.scaler = None
 
     def ler_dataset(self, path):
         return pd.read_csv(path)
@@ -29,6 +30,19 @@ class DatasetHandler:
                 labels=labels).astype(str)
         
         return X
+    
+    # https://www.digitalocean.com/community/tutorials/normalize-data-in-python
+    def normalizar_dados(self, range, df):
+        self.scaler = MinMaxScaler(feature_range=range)
+        normalized = self.scaler.fit_transform(df)
+
+        return pd.DataFrame(normalized)
+    
+    # https://stackoverflow.com/questions/43382716/how-can-i-cleanly-normalize-data-and-then-unnormalize-it-later
+    def desnormalizar_dados(self, df):
+        unnormalized = self.scaler.inverse_transform(df)
+        
+        return pd.DataFrame(unnormalized)
 
 # df = pd.read_csv("data/treino_sinais_vitais_com_label.csv")
 
