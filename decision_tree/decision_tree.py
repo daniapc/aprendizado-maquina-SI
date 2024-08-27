@@ -7,6 +7,11 @@ import random
 import itertools
 from datetime import datetime
 
+from sklearn.metrics import confusion_matrix
+
+import seaborn as sn
+import matplotlib.pyplot as plt
+
 Number = (int, float, complex)
 
 class TreeNode:
@@ -251,7 +256,7 @@ class TreeNode:
             return child.predict(sample)
         
 #This function performs an hyperparameter tunning using cross-validation
-def crossvalidation(X, y, model, n_folds, params, seed=4, q = None):
+def crossvalidation(X, y, model, n_folds, params, seed=4, q = None, save=True, conf_matrix=False):
     start=datetime.now()
     #Creating combinations of all hyperparameters (like and expand grid)
     keys, values = zip(*params.items())
@@ -267,27 +272,54 @@ def crossvalidation(X, y, model, n_folds, params, seed=4, q = None):
         #Save the indexes intro the folds
         folds = np.array_split(indexes,n_folds)
         acc = [] #Initialice a local accuracy for each fold
+        total_y = [0]
+        total_pred = [0]
         #Compute the accuracy of each fold using the first one as a test set
         for k in range(1,n_folds):
             #Change the parameters of the model
             model.set_params(params[j])
             #Train the model with the fold
             model.fit(X.loc[folds[k]], y.loc[folds[k]])
+            total_y += list(y.loc[folds[k]])
             #Predict using the first fold as test set
-            prediction = X.loc[folds[1]].apply(lambda row : model.predict(row), axis = 1)
+            prediction = X.loc[folds[0]].apply(lambda row : model.predict(row), axis = 1)
+            total_pred += list(prediction)
             #Store the accuracy of the fold
-            acc.append(sum((prediction  ==  y.loc[folds[1]]))/len(y.loc[folds[1]]))
+            acc.append(sum((prediction  ==  y.loc[folds[0]]))/len(y.loc[folds[0]]))
         #Compute the accuracy of all the folds for the set of parameters
         accuracy.append(sum(acc)/len(acc))
         #Print the results for the set of parameters
         print(f"Parameters: {params[j]}, Accuracy: {accuracy[j]}")
 
-        param_dict = params[j].copy()
-        param_dict["q"] = str(q)
-        param_dict["Dict"] = str(param_dict)
-        param_dict["Accuracy"] = accuracy[j]
-        save_df = pd.DataFrame([param_dict])
-        save_df.to_csv("./decision_tree/predictions.csv", mode='a', index=False, header=False)
+        if save:
+            param_dict = params[j].copy()
+            param_dict["q"] = str(q)
+            param_dict["Dict"] = str(param_dict)
+            param_dict["Accuracy"] = accuracy[j]
+            save_df = pd.DataFrame([param_dict])
+            save_df.to_csv("./decision_tree/predictions.csv", mode='a', index=False, header=False)
+
+        if conf_matrix:
+
+            total_y.pop(0)
+            total_pred.pop(0)
+
+            array = confusion_matrix(total_y, total_pred)
+            df_cm = pd.DataFrame(array)
+
+            ax = plt.subplot()
+            sn.set_theme(font_scale=1.0) # Adjust to fit
+            sn.heatmap(df_cm, annot=True, ax=ax, cmap="Blues", fmt="g")
+            label_font = {'size':'8'}  # Adjust to fit
+            ax.set_xlabel('Predicted labels', fontdict=label_font);
+            ax.set_ylabel('Observed labels', fontdict=label_font);
+
+            title_font = {'size':'8'}  # Adjust to fit
+            ax.set_title('Confusion Matrix', fontdict=title_font);
+
+            ax.tick_params(axis='both', which='major', labelsize=8)
+
+            plt.show()
 
         #Change the seed to do other folds
         seed=seed+1
@@ -299,4 +331,4 @@ def crossvalidation(X, y, model, n_folds, params, seed=4, q = None):
     
     end = datetime.now()
     tempo = round((end-start).seconds + (end-start).microseconds/1000000,3)
-    print(f"Tempo de execução: {tempo} s")
+    # print(f"Tempo de execução: {tempo} s")
