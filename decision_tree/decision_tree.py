@@ -8,6 +8,7 @@ import itertools
 from datetime import datetime
 
 from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import KFold
 
 import seaborn as sn
 import matplotlib.pyplot as plt
@@ -269,23 +270,25 @@ def crossvalidation(X, y, model, n_folds, params, seed=4, q = None, save=True, c
         indexes=np.array(X.index)
         #Shuffle randomly the indexes
         random.Random(seed).shuffle(indexes)
+
+        kf = KFold(n_splits=n_folds)
         #Save the indexes intro the folds
         folds = np.array_split(indexes,n_folds)
         acc = [] #Initialice a local accuracy for each fold
         total_y = [0]
         total_pred = [0]
         #Compute the accuracy of each fold using the first one as a test set
-        for k in range(1,n_folds):
+        for train,test in kf.split(X,y):
             #Change the parameters of the model
             model.set_params(params[j])
             #Train the model with the fold
-            model.fit(X.loc[folds[k]], y.loc[folds[k]])
-            total_y += list(y.loc[folds[k]])
+            model.fit(X.loc[train], y.loc[train])
+            total_y += list(y.loc[test])
             #Predict using the first fold as test set
-            prediction = X.loc[folds[0]].apply(lambda row : model.predict(row), axis = 1)
+            prediction = X.loc[test].apply(lambda row : model.predict(row), axis = 1)
             total_pred += list(prediction)
             #Store the accuracy of the fold
-            acc.append(sum((prediction  ==  y.loc[folds[0]]))/len(y.loc[folds[0]]))
+            acc.append(sum((prediction  ==  y.loc[test]))/len(y.loc[test]))
         #Compute the accuracy of all the folds for the set of parameters
         accuracy.append(sum(acc)/len(acc))
         #Print the results for the set of parameters
